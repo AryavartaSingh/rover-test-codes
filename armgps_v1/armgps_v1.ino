@@ -85,13 +85,17 @@ void GPSData(HardwareSerial &gpsPort, HardwareSerial &outputPort) {
             if (partIdx >= 4 && parts[2].length() > 0 && parts[4].length() > 0) {
                 double latitude = ConvertLatLong(parts[2].toFloat(), parts[3][0]);
                 double longitude = ConvertLatLong(parts[4].toFloat(), parts[5][0]);
-
+                //float zdir = zBNO0551();
                 outputPort.print(latitude, 6);
                 outputPort.print(',');
-                outputPort.println(longitude, 6);
+                outputPort.print(longitude, 6);
+                //outputPort.print(',');
+                //outputPort.println(zdir, 2);
                 Serial.print(latitude, 6);
                 Serial.print(',');
-                Serial.println(longitude, 6);
+                Serial.print(longitude, 6);
+               // Serial.print(',');
+                //Serial.println(zdir, 2);
             }
         }
     }
@@ -171,7 +175,7 @@ void setup()
 {
   Serial.begin(115200);
   Sender.begin(115200) ;   // Use default serial for debug output
-  GPSPort.begin(9600, SERIAL_8N1, 25, 26);
+  GPSPort.begin(115200, SERIAL_8N1, 25, 26);
   SerialPort.begin(115200, SERIAL_8N1, 2, 0);//(baud rate,protocol,Tx,Rx)
 
   // Limit Switch INPUT Pins
@@ -294,7 +298,7 @@ void loop()
   }
   else
   {
-    //ik.Stop();
+    //ik.Stop(); //commented tha
     drive.Stop();
 //    r++;
 //    if (r == 1)
